@@ -49,6 +49,10 @@ export class RegisterComponent {
 
     this.modalInstance = new bootstrap.Modal(this.successModal.nativeElement);
     this.modalInstance.show();
+
+    setTimeout(() => {
+      this.redirectToLogin();
+    }, 5000); // 5000ms = 5 seconds
   }
 
   redirectToLogin() {
