@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,9 +7,10 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
 })
 export class RegisterComponent {
+  //todo: username
   email: string = '';
   password: string = '';
   confirmPassword: string = '';

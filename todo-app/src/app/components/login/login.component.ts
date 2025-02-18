@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule],
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -22,7 +22,7 @@ export class LoginComponent {
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user)); // Store logged-in user
       alert('Login successful!');
-      this.router.navigate(['/todo-list']); // Redirect to Todo List
+      this.router.navigate(['/to-do-list']); // Redirect to Todo List
     } else {
       alert('Invalid email or password');
     }
