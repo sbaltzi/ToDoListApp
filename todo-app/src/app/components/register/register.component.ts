@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import * as bootstrap from 'bootstrap';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,6 +12,8 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, RouterModule, CommonModule],
 })
 export class RegisterComponent {
+  @ViewChild('successModal') successModal!: ElementRef;
+  private modalInstance: any;
   //todo: username
   email: string = '';
   password: string = '';
@@ -44,7 +47,14 @@ export class RegisterComponent {
     users.push({ email: this.email, password: this.password });
     localStorage.setItem('users', JSON.stringify(users));
 
-    alert('Registration successful! Please login.');
+    this.modalInstance = new bootstrap.Modal(this.successModal.nativeElement);
+    this.modalInstance.show();
+  }
+
+  redirectToLogin() {
+    if (this.modalInstance) {
+      this.modalInstance.hide();
+    }
     this.router.navigate(['/login']);
   }
 
@@ -78,4 +88,5 @@ export class RegisterComponent {
       && !this.passwordInvalidOrEmpty() 
       && !this.confirmPasswordInvalidOrEmpty();
   }
+  
 }
