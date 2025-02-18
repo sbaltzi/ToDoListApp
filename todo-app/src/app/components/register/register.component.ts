@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class RegisterComponent {
   @ViewChild('successModal') successModal!: ElementRef;
   private modalInstance: any;
-  //todo: username
+  username: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
@@ -22,7 +22,7 @@ export class RegisterComponent {
   constructor(private router: Router) { }
 
   onRegister() {
-    if (!this.email || !this.password || !this.confirmPassword) {
+    if (!this.username || !this.email || !this.password || !this.confirmPassword) {
       alert('All fields are required.');
       return;
     }
@@ -39,12 +39,19 @@ export class RegisterComponent {
 
     let users = JSON.parse(localStorage.getItem('users') || '[]');
 
+    // todo
     if (users.find((u: any) => u.email === this.email)) {
       alert('User already exists!');
       return;
     }
 
-    users.push({ email: this.email, password: this.password });
+    // todo
+    if (users.find((u: any) => u.username === this.username)) {
+      alert('Username already taken. Choose a different one.');
+      return;
+    }
+
+    users.push({ username: this.username, email: this.email, password: this.password });
     localStorage.setItem('users', JSON.stringify(users));
 
     this.modalInstance = new bootstrap.Modal(this.successModal.nativeElement);
@@ -52,7 +59,7 @@ export class RegisterComponent {
 
     setTimeout(() => {
       this.redirectToLogin();
-    }, 5000); // 5000ms = 5 seconds
+    }, 3000); // 3000ms = 3 seconds
   }
 
   redirectToLogin() {
@@ -60,6 +67,14 @@ export class RegisterComponent {
       this.modalInstance.hide();
     }
     this.router.navigate(['/login']);
+  }
+
+  usernameInvalid(): boolean {
+    return this.username !== '' && this.username.length < 3;
+  }
+
+  usernameInvalidOrEmpty(): boolean {
+    return this.usernameInvalid() || this.username === '';
   }
 
   emailInvalid(): boolean {
@@ -72,7 +87,8 @@ export class RegisterComponent {
   }
 
   passwordInvalid(): boolean {
-    return this.password !== '' && this.password.length < 8;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    return this.password.length > 0 && !passwordRegex.test(this.password);
   }
 
   passwordInvalidOrEmpty(): boolean {
@@ -90,7 +106,8 @@ export class RegisterComponent {
   isFormValid(): boolean {
     return !this.emailInvalidOrEmpty()
       && !this.passwordInvalidOrEmpty() 
-      && !this.confirmPasswordInvalidOrEmpty();
+      && !this.confirmPasswordInvalidOrEmpty()
+      && !this.usernameInvalidOrEmpty();
   }
   
 }
