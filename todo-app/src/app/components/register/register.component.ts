@@ -16,7 +16,7 @@ export class RegisterComponent {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   onRegister() {
     if (!this.email || !this.password || !this.confirmPassword) {
@@ -53,11 +53,29 @@ export class RegisterComponent {
     return this.email !== '' && !emailPattern.test(this.email);
   }
 
+  emailInvalidOrEmpty(): boolean {
+    return this.emailInvalid() || this.email === '';
+  }
+
   passwordInvalid(): boolean {
     return this.password !== '' && this.password.length < 8;
   }
 
+  passwordInvalidOrEmpty(): boolean {
+    return this.passwordInvalid() || this.password === '';
+  }
+
   confirmPasswordInvalid(): boolean {
     return this.confirmPassword !== '' && this.password !== this.confirmPassword;
+  }
+
+  confirmPasswordInvalidOrEmpty(): boolean {
+    return this.confirmPasswordInvalid() || this.confirmPassword === '';
+  }
+
+  isFormValid(): boolean {
+    return !this.emailInvalidOrEmpty()
+      && !this.passwordInvalidOrEmpty() 
+      && !this.confirmPasswordInvalidOrEmpty();
   }
 }
