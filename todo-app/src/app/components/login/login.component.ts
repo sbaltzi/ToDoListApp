@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  @ViewChild('errorModal') errorModal!: ElementRef;
+  private modalInstance: any; 
   email: string = '';
   password: string = '';
 
@@ -22,10 +25,9 @@ export class LoginComponent {
 
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user)); // Store logged-in user
-      alert('Login successful!');
       this.router.navigate(['/to-do-list']); // Redirect to Todo List
     } else {
-      alert('Invalid email or password');
+      this.showErrorModal();
     }
   }
 
@@ -40,5 +42,10 @@ export class LoginComponent {
 
   isFormValid(): boolean {
     return !this.emailInvalidOrEmpty() && this.password !== '';
+  }
+
+  showErrorModal() {
+    this.modalInstance = new bootstrap.Modal(this.errorModal.nativeElement);
+    this.modalInstance.show();
   }
 }
