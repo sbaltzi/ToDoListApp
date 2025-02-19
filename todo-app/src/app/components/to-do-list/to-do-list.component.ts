@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-to-do-list',
@@ -11,6 +12,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './to-do-list.component.css'
 })
 export class ToDoListComponent implements OnInit {
+  @ViewChild('logoutModal') logoutModal!: ElementRef;
+  modalInstance: any;
   showAddTaskForm = false;
 
   taskTitle: string = '';
@@ -65,8 +68,14 @@ export class ToDoListComponent implements OnInit {
     this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
   }
 
-  logout() {
+  openLogoutModal() {
+    this.modalInstance = new bootstrap.Modal(this.logoutModal.nativeElement);
+    this.modalInstance.show();
+  }
+
+  confirmLogout() {
     localStorage.removeItem('currentUser');
+    this.modalInstance.hide();
     this.router.navigate(['/login']);
   }
 }
