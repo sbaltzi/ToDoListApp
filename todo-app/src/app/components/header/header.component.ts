@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import * as bootstrap from 'bootstrap';
 
@@ -9,27 +9,39 @@ import * as bootstrap from 'bootstrap';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @ViewChild('logoutModal') logoutModal!: ElementRef;
   modalInstance: any;
-  showLogout: boolean = false;
+  showUserMenu: boolean = false;
+  username: string | null = '';
+  isDropdownOpen: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showLogout = ['/to-do-list'].includes(event.url);
+        this.showUserMenu = ['/to-do-list'].includes(event.url);
       }
     });
   }
 
+  ngOnInit() {
+    const currentUser = localStorage.getItem('currentUser');
+    this.username = currentUser ? JSON.parse(currentUser).username : null;
+  }
+
   openLogoutModal() {
-      this.modalInstance = new bootstrap.Modal(this.logoutModal.nativeElement);
-      this.modalInstance.show();
-    }
-  
-    confirmLogout() {
-      localStorage.removeItem('currentUser');
-      this.modalInstance.hide();
-      this.router.navigate(['/login']);
-    }
+    this.modalInstance = new bootstrap.Modal(this.logoutModal.nativeElement);
+    this.modalInstance.show();
+  }
+
+  confirmLogout() {
+    localStorage.removeItem('currentUser');
+    this.modalInstance.hide();
+    this.toggleDropdown();
+    this.router.navigate(['/login']);
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
 }
