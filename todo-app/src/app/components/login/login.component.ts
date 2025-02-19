@@ -16,10 +16,15 @@ export class LoginComponent {
   private modalInstance: any; 
   email: string = '';
   password: string = '';
+  invalidEmailOrPassword: boolean = false;
 
   constructor(private router: Router) {}
 
   onLogin() {
+    if (!this.isFormValid()) {
+      return;
+    }
+
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find((u: any) => u.email === this.email && u.password === this.password);
 
@@ -27,6 +32,7 @@ export class LoginComponent {
       localStorage.setItem('currentUser', JSON.stringify(user)); // Store logged-in user
       this.router.navigate(['/to-do-list']); // Redirect to Todo List
     } else {
+      this.invalidEmailOrPassword = true;
       this.showErrorModal();
     }
   }
@@ -47,5 +53,9 @@ export class LoginComponent {
   showErrorModal() {
     this.modalInstance = new bootstrap.Modal(this.errorModal.nativeElement);
     this.modalInstance.show();
+  }
+
+  resetError() {
+    this.invalidEmailOrPassword = false;
   }
 }
