@@ -22,34 +22,11 @@ export class RegisterComponent {
   constructor(private router: Router) { }
 
   onRegister() {
-    if (!this.username || !this.email || !this.password || !this.confirmPassword) {
-      alert('All fields are required.');
-      return;
-    }
-
-    if (this.password.length < 8) {
-      alert('Password must be at least 8 characters long.');
-      return;
-    }
-
-    if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match.');
+    if (!this.isFormValid()) {
       return;
     }
 
     let users = JSON.parse(localStorage.getItem('users') || '[]');
-
-    // todo
-    if (users.find((u: any) => u.email === this.email)) {
-      alert('User already exists!');
-      return;
-    }
-
-    // todo
-    if (users.find((u: any) => u.username === this.username)) {
-      alert('Username already taken. Choose a different one.');
-      return;
-    }
 
     users.push({ username: this.username, email: this.email, password: this.password });
     localStorage.setItem('users', JSON.stringify(users));
@@ -77,6 +54,11 @@ export class RegisterComponent {
     return this.usernameInvalid() || this.username === '';
   }
 
+  usernameExists(): boolean {
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    return users.some((u: any) => u.username === this.username);
+  }
+
   emailInvalid(): boolean {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return this.email !== '' && !emailPattern.test(this.email);
@@ -84,6 +66,11 @@ export class RegisterComponent {
 
   emailInvalidOrEmpty(): boolean {
     return this.emailInvalid() || this.email === '';
+  }
+
+  emailExists(): boolean {
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+    return users.some((u: any) => u.email === this.email);
   }
 
   passwordInvalid(): boolean {
@@ -107,7 +94,8 @@ export class RegisterComponent {
     return !this.emailInvalidOrEmpty()
       && !this.passwordInvalidOrEmpty() 
       && !this.confirmPasswordInvalidOrEmpty()
-      && !this.usernameInvalidOrEmpty();
+      && !this.usernameInvalidOrEmpty()
+      && !this.emailExists()
+      && !this.usernameExists();
   }
-  
 }
