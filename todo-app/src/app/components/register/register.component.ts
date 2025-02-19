@@ -18,6 +18,7 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  formDisabled: boolean = false;
 
   constructor(private router: Router) { }
 
@@ -25,6 +26,8 @@ export class RegisterComponent {
     if (!this.isFormValid()) {
       return;
     }
+
+    this.formDisabled = true;
 
     let users = JSON.parse(localStorage.getItem('users') || '[]');
 

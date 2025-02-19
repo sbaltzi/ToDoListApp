@@ -1,67 +1,71 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow-lg" style="width: 350px;">
-      <h3 class="text-center mb-3">Register</h3>
-  
-      <form (ngSubmit)="onRegister()">
-        <!-- Username Input -->
-        <div class="mb-3">
-          <label for="username" class="form-label">Username<span style="color:red;">*</span></label>
-          <input id="username" class="form-control" [(ngModel)]="username" name="username" required minlength="3">
-          <small class="text-danger" *ngIf="usernameInvalid()">Username must be at least 3 characters long.</small>
-          <small class="text-danger" *ngIf="usernameExists()">Username already taken. Choose a different one</small>
-        </div>
+  <div class="card p-4 shadow-lg" style="width: 350px;">
+    <h3 class="text-center mb-3">Register</h3>
 
-        <!-- Email Input -->
-        <div class="mb-3">
-          <label for="email" class="form-label">Email<span style="color:red;">*</span></label>
-          <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required>
-          <small class="text-danger" *ngIf="emailInvalid()">Please enter a valid email address.</small>
-          <small class="text-danger" *ngIf="emailExists()">Email already exists!</small>
-        </div>
-  
-        <!-- Password Input -->
-        <div class="mb-3">
-          <label for="password" class="form-label">Password<span style="color:red;">*</span></label>
-          <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required minlength="8">
-          <small class="text-danger" *ngIf="passwordInvalid()">Password must be at least 8 characters long and contain both letters and numbers.</small>
-        </div>
-  
-        <!-- Confirm Password Input -->
-        <div class="mb-3">
-          <label for="confirmPassword" class="form-label">Confirm Password<span style="color:red;">*</span></label>
-          <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required>
-          <small class="text-danger" *ngIf="confirmPasswordInvalid()">Passwords do not match.</small>
-        </div>
+    <form [ngClass]="{'disabled-form': formDisabled}" (ngSubmit)="onRegister()">
+      <!-- Username Input -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username<span style="color:red;">*</span></label>
+        <input id="username" class="form-control" [(ngModel)]="username" name="username" required minlength="3"
+          [ngClass]="{'is-invalid': (usernameInvalid() || usernameExists()) && !formDisabled}" [disabled]="formDisabled">
+        <small class="text-danger" *ngIf="usernameInvalid() && !formDisabled">Username must be at least 3 characters long.</small>
+        <small class="text-danger" *ngIf="usernameExists() && !formDisabled">Username already taken. Choose a different one</small>
+      </div>
 
-        <div class="mb-3">
-          <small><span style="color: red; font-weight: bold;">*</span>The fields are required</small>
-        </div>
-        
-        <!-- Register Button -->
-        <button type="submit" class="btn btn-success w-100" [disabled]="!isFormValid()">Register</button>
-      </form>
-  
-      <!-- Login Link -->
-      <p class="text-center mt-3">
-        Already have an account? <a routerLink="/login">Login</a>
-      </p>
-    </div>
+      <!-- Email Input -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email<span style="color:red;">*</span></label>
+        <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required
+          [ngClass]="{'is-invalid': (emailInvalid() || emailExists()) && !formDisabled}" [disabled]="formDisabled">
+        <small class="text-danger" *ngIf="emailInvalid() && !formDisabled">Please enter a valid email address.</small>
+        <small class="text-danger" *ngIf="emailExists() && !formDisabled">Email already exists!</small>
+      </div>
+
+      <!-- Password Input -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password<span style="color:red;">*</span></label>
+        <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required
+          minlength="8" [ngClass]="{'is-invalid': passwordInvalid() && !formDisabled}" [disabled]="formDisabled">
+        <small class="text-danger" *ngIf="passwordInvalid() && !formDisabled">Password must be at least 8 characters long and contain
+          both letters and numbers.</small>
+      </div>
+
+      <!-- Confirm Password Input -->
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password<span style="color:red;">*</span></label>
+        <input type="password" id="confirmPassword" class="form-control" [(ngModel)]="confirmPassword"
+          name="confirmPassword" required [ngClass]="{'is-invalid': confirmPasswordInvalid() && !formDisabled}" [disabled]="formDisabled">
+        <small class="text-danger" *ngIf="confirmPasswordInvalid() && !formDisabled">Passwords do not match.</small>
+      </div>
+
+      <div class="mb-3">
+        <small><span style="color: red; font-weight: bold;">*</span>The fields are required</small>
+      </div>
+
+      <!-- Register Button -->
+      <button type="submit" class="btn btn-success w-100" [disabled]="!isFormValid() || formDisabled">Register</button>
+    </form>
+
+    <!-- Login Link -->
+    <p class="text-center mt-3">
+      Already have an account? <a routerLink="/login">Login</a>
+    </p>
   </div>
+</div>
 
-  <div class="modal fade" #successModal tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="successModalLabel">Registration Successful 🎉</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Congratulations! Your account has been successfully created.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="redirectToLogin()">Go to Login</button>
-        </div>
+<div class="modal fade" #successModal tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Registration Successful 🎉</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Congratulations! Your account has been successfully created.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="redirectToLogin()">Go to Login</button>
       </div>
     </div>
   </div>
-  
+</div>
