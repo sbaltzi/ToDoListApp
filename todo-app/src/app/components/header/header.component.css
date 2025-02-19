@@ -1,0 +1,12 @@
+.navbar {
+  height: 80px; /* Increase height */
+  font-size: 1.5rem; /* Make text bigger */
+}
+
+.navbar-brand {
+  font-size: 1.8rem; /* Increase brand text size */
+}
+
+.navbar-brand i {
+  font-size: 2rem; /* Make the Font Awesome icon bigger */
+}
