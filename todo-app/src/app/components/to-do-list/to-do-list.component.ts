@@ -40,6 +40,7 @@ export class ToDoListComponent implements OnInit {
       title: this.taskTitle,
       description: this.taskDescription,
       createdAt: new Date().toISOString(),
+      username: this.username,
       completed: false,
     };
 
@@ -71,12 +72,14 @@ export class ToDoListComponent implements OnInit {
   completedTasks() {
     return this.tasks
       .filter(task => task.completed)
+      .filter(task => task.username === this.username)
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   pendingTasks() {
     return this.tasks
       .filter(task => !task.completed)
+      .filter(task => task.username === this.username)
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 }
