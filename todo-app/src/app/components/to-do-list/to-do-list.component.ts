@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './to-do-list.component.css'
 })
 export class ToDoListComponent implements OnInit {
+  showAddTaskForm = false;
+
   taskTitle: string = '';
   taskDescription: string = '';
   tasks: any[] = [];
@@ -19,6 +21,10 @@ export class ToDoListComponent implements OnInit {
 
   ngOnInit() {
     this.loadTasks();
+  }
+
+  toggleAddTask() {
+    this.showAddTaskForm = !this.showAddTaskForm;
   }
 
   addTask() {
@@ -38,6 +44,7 @@ export class ToDoListComponent implements OnInit {
     this.saveTasks();
     this.taskTitle = '';
     this.taskDescription = '';
+    this.showAddTaskForm = false;
   }
 
   toggleTaskCompletion(task: any) {

@@ -1,36 +1,44 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h3>My Todo List</h3>
-      <button class="btn btn-danger" (click)="logout()">Logout</button>
+        <h3>My Todo List</h3>
+        <button class="btn btn-danger" (click)="logout()">Logout</button>
     </div>
-  
-    <!-- Add Task Form -->
-    <div class="card p-3 mb-3">
-      <h5>Add a New Task</h5>
-      <form (ngSubmit)="addTask()">
-        <div class="mb-2">
-          <input type="text" class="form-control" [(ngModel)]="taskTitle" name="taskTitle" placeholder="Task Title" required>
-        </div>
-        <div class="mb-2">
-          <textarea class="form-control" [(ngModel)]="taskDescription" name="taskDescription" placeholder="Task Description (Optional)"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Add Task</button>
-      </form>
+
+    <!-- Toggle Add Task Button -->
+    <button class="btn btn-outline-primary mb-3" (click)="toggleAddTask()">
+        <span *ngIf="showAddTaskForm" class="fa fa-minus"></span>
+        <span *ngIf="!showAddTaskForm" class="fa fa-plus"></span>
+    </button>
+
+    <!-- Add Task Form (Expandable) -->
+    <div class="card p-3 mb-3" *ngIf="showAddTaskForm">
+        <h5>Add a New Task</h5>
+        <form (ngSubmit)="addTask()">
+            <div class="mb-2">
+                <input type="text" class="form-control" [(ngModel)]="taskTitle" name="taskTitle"
+                    placeholder="Task Title" required>
+            </div>
+            <div class="mb-2">
+                <textarea class="form-control" [(ngModel)]="taskDescription" name="taskDescription"
+                    placeholder="Task Description (Optional)"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Add Task</button>
+        </form>
     </div>
-  
+
     <!-- Task List -->
     <div class="card p-3">
-      <h5>Tasks</h5>
-      <ul class="list-group">
-        <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <input type="checkbox" class="form-check-input me-2" [(ngModel)]="task.completed" (change)="toggleTaskCompletion(task)">
-            <span [class.text-decoration-line-through]="task.completed">{{ task.title }}</span>
-            <small *ngIf="task.description" class="d-block text-muted">{{ task.description }}</small>
-          </div>
-          <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">Delete</button>
-        </li>
-      </ul>
+        <h5>Tasks</h5>
+        <ul class="list-group">
+            <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <input type="checkbox" class="form-check-input me-2" [(ngModel)]="task.completed"
+                        (change)="toggleTaskCompletion(task)">
+                    <span [class.text-decoration-line-through]="task.completed">{{ task.title }}</span>
+                    <small *ngIf="task.description" class="d-block text-muted">{{ task.description }}</small>
+                </div>
+                <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">Delete</button>
+            </li>
+        </ul>
     </div>
-  </div>
-  
+</div>
