@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-primary {
+  background-color: rgb(253, 221, 85) !important;
+}
+
+.btn-outline-primary {
+  color: black !important;
+  border-color: black !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: rgb(231, 231, 231) !important;
+}
+
+.form-check-input:checked {
+    background-color: black;
+    border-color: black;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: rgb(253, 221, 85);
+}
