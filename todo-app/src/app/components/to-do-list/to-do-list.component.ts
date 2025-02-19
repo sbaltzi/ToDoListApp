@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './to-do-list.component.css'
 })
 export class ToDoListComponent implements OnInit {
+  username: string = '';
   showAddTaskForm = false;
 
   taskTitle: string = '';
@@ -20,6 +21,8 @@ export class ToDoListComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
+    const currentUser = localStorage.getItem('currentUser');
+    this.username = currentUser ? JSON.parse(currentUser).username : null;
     this.loadTasks();
   }
 
