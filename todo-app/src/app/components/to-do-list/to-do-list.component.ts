@@ -13,12 +13,11 @@ import { CommonModule } from '@angular/common';
 export class ToDoListComponent implements OnInit {
   username: string = '';
   showAddTaskForm = false;
-
   taskTitle: string = '';
   taskDescription: string = '';
   tasks: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit() {
     const currentUser = localStorage.getItem('currentUser');
@@ -40,6 +39,7 @@ export class ToDoListComponent implements OnInit {
       id: Date.now(),
       title: this.taskTitle,
       description: this.taskDescription,
+      createdAt: new Date().toISOString(),
       completed: false,
     };
 
@@ -66,5 +66,17 @@ export class ToDoListComponent implements OnInit {
 
   loadTasks() {
     this.tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+  }
+
+  completedTasks() {
+    return this.tasks
+      .filter(task => task.completed)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  pendingTasks() {
+    return this.tasks
+      .filter(task => !task.completed)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 }

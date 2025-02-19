@@ -1,6 +1,6 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>{{username}}'s Todo List</h3>
+        <h3>{{username}}'s Todos</h3>
     </div>
 
     <!-- Toggle Add Task Button -->
@@ -32,16 +32,37 @@
 
     <!-- Task List -->
     <div class="card p-3">
-        <h5>Tasks</h5>
+        <h5>Pending</h5>
         <ul class="list-group">
-            <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
+            <li *ngFor="let task of pendingTasks()" class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <input type="checkbox" class="form-check-input me-2" [(ngModel)]="task.completed"
-                        (change)="toggleTaskCompletion(task)">
+                        (click)="toggleTaskCompletion(task)">
                     <span [class.text-decoration-line-through]="task.completed">{{ task.title }}</span>
                     <small *ngIf="task.description" class="d-block text-muted">{{ task.description }}</small>
                 </div>
-                <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">Delete</button>
+                <div>
+                    <button class="btn btn-sm btn-dark me-3" (click)="toggleTaskCompletion(task)">Mark Done</button>
+                    <button class="btn btn-sm btn-danger me-3" (click)="deleteTask(task.id)">Delete</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card p-3 mt-4">
+        <h5>Completed</h5>
+        <ul class="list-group">
+            <li *ngFor="let task of completedTasks()" class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <input type="checkbox" class="form-check-input me-2" [(ngModel)]="task.completed"
+                        (click)="toggleTaskCompletion(task)">
+                    <span [class.text-decoration-line-through]="task.completed">{{ task.title }}</span>
+                    <small *ngIf="task.description" class="d-block text-muted">{{ task.description }}</small>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-light me-3" (click)="toggleTaskCompletion(task)">Reopen</button>
+                    <button class="btn btn-sm btn-danger me-3" (click)="deleteTask(task.id)">Delete</button>
+                </div>
             </li>
         </ul>
     </div>
