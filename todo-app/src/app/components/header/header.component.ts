@@ -1,17 +1,35 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private router: Router) {}
+  @ViewChild('logoutModal') logoutModal!: ElementRef;
+  modalInstance: any;
+  showLogout: boolean = false;
 
-  // logout() {
-  //   localStorage.removeItem('currentUser');
-  //   this.router.navigate(['/login']);
-  // }
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showLogout = ['/to-do-list'].includes(event.url);
+      }
+    });
+  }
+
+  openLogoutModal() {
+      this.modalInstance = new bootstrap.Modal(this.logoutModal.nativeElement);
+      this.modalInstance.show();
+    }
+  
+    confirmLogout() {
+      localStorage.removeItem('currentUser');
+      this.modalInstance.hide();
+      this.router.navigate(['/login']);
+    }
 }
