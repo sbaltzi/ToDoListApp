@@ -13,13 +13,18 @@
     <div class="card p-3 mb-3" *ngIf="showAddTaskForm">
         <h5>Add a New Task</h5>
         <form (ngSubmit)="addTask()">
-            <div class="mb-2">
-                <input type="text" class="form-control" [(ngModel)]="taskTitle" name="taskTitle"
-                    placeholder="Task Title" required>
+            <!-- Task Title Row -->
+            <div class="mb-2 d-flex align-items-center">
+                <label for="taskTitle" class="form-label me-2" style="width: 120px;">Title:</label>
+                <input type="text" class="form-control flex-grow-1" [(ngModel)]="taskTitle" name="taskTitle"
+                    placeholder="Enter task title" required>
             </div>
-            <div class="mb-2">
-                <textarea class="form-control" [(ngModel)]="taskDescription" name="taskDescription"
-                    placeholder="Task Description (Optional)"></textarea>
+
+            <!-- Task Description Row -->
+            <div class="mb-2 d-flex align-items-center">
+                <label for="taskDescription" class="form-label me-2" style="width: 120px;">Description:</label>
+                <textarea class="form-control flex-grow-1" [(ngModel)]="taskDescription" name="taskDescription"
+                    placeholder="Enter description (Optional)"></textarea>
             </div>
             <button type="submit" class="btn btn-primary w-100">Add Task</button>
         </form>
