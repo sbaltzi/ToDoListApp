@@ -6,6 +6,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const user = localStorage.getItem('currentUser');
 
   if (user) {
+    //router.navigate(['/to-do-list']);
     return true;
   } else {
     router.navigate(['/login']);
