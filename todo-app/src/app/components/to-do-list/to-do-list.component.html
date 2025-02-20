@@ -35,6 +35,12 @@
         </form>
     </div>
 
+    <!-- Success Alert -->
+    <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        🎉 Task added successfully!
+        <button type="button" class="btn-close" (click)="showSuccessMessage = false"></button>
+    </div>
+
     <!-- Task List -->
     <div class="card p-3">
         <h5>Pending</h5>

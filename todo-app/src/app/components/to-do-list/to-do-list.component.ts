@@ -16,6 +16,7 @@ export class ToDoListComponent implements OnInit {
   taskTitle: string = '';
   taskDescription: string = '';
   tasks: any[] = [];
+  showSuccessMessage: boolean = false;
 
   constructor(private router: Router) { }
 
@@ -48,6 +49,11 @@ export class ToDoListComponent implements OnInit {
     this.taskTitle = '';
     this.taskDescription = '';
     this.showAddTaskForm = false;
+    this.showSuccessMessage = true;
+
+    setTimeout(() => {
+      this.showSuccessMessage = false;
+    }, 3000);
   }
 
   hasTitle() {
