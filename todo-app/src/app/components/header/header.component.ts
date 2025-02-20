@@ -44,4 +44,18 @@ export class HeaderComponent implements OnInit {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+
+  navigateToHome() {
+    const currentRoute = this.router.url;
+
+    switch (currentRoute) {
+      case '/to-do-list': 
+      this.router.navigate(['/to-do-list']);
+      break;
+      case '/login':
+      case '/register':
+      this.router.navigate(['/login']);
+      break;
+    }
+  }
 }

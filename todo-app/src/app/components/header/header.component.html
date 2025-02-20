@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <!-- Clickable Logo -->
-        <a class="navbar-brand d-flex align-items-center" [routerLink]="['/to-do-list']">
+        <a class="navbar-brand d-flex align-items-center" (click)="navigateToHome()">
             <i class="fa fa-tasks fa-lg me-2"></i>
             <span>Todo List</span>
         </a>
