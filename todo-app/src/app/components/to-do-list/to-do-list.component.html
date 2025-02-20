@@ -15,7 +15,7 @@
         <form (ngSubmit)="addTask()">
             <!-- Task Title Row -->
             <div class="mb-2">
-                <label for="taskTitle" class="form-label">Title<span style="color:red;">*</span></label>
+                <label for="taskTitle" class="form-label">Title<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" [(ngModel)]="taskTitle" name="taskTitle"
                     placeholder="Enter task title" required>
             </div>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="mb-3">
-                <small><span style="color: red; font-weight: bold;">*</span>The fields are required</small>
+                <small><span class="text-danger" style="font-weight: bold;">*</span>The fields are required</small>
             </div>
 
             <button type="submit" class="btn btn-dark w-100" [disabled]="!hasTitle()">Add Task</button>
