@@ -19,8 +19,8 @@
                         <i class="fa fa-user"></i> {{ username }}
                     </button>
                     <ul class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}" aria-labelledby="dropdownUserMenu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" [ngClass]="{'disabled-link': true}">Profile</a></li>
+                        <li><a class="dropdown-item" [ngClass]="{'disabled-link': true}">Settings</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
