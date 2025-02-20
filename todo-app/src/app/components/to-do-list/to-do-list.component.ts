@@ -30,8 +30,7 @@ export class ToDoListComponent implements OnInit {
   }
 
   addTask() {
-    if (!this.taskTitle.trim()) {
-      alert('Task title cannot be empty.');
+    if (!this.hasTitle()) {
       return;
     }
 
@@ -49,6 +48,10 @@ export class ToDoListComponent implements OnInit {
     this.taskTitle = '';
     this.taskDescription = '';
     this.showAddTaskForm = false;
+  }
+
+  hasTitle() {
+    return this.taskTitle.trim();
   }
 
   toggleTaskCompletion(task: any) {
