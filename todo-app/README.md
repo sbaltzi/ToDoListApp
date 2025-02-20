@@ -2,6 +2,20 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
 
+## Repository
+
+Clone the repository:
+
+git clone https://github.com/sbaltzi/ToDoListApp.git
+
+## App Folder
+
+Navigate into the todo-app folder:
+
+```bash
+cd ToDoListApp/todo-app
+```
+
 ## Development server
 
 To start a local development server, run:
